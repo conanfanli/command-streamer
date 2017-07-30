@@ -8,7 +8,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='command_streamer',
-    version='0.0.0a1',
+    version='0.0.1',
     description='Stream command output using asyncio',
     url='https://github.com/conanfanli/command-streamer',
     packages=find_packages(exclude=['tests*']),
