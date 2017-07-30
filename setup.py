@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from codecs import open
 from os import path
 from setuptools import setup, find_packages
 
@@ -16,7 +15,7 @@ setup(
     install_requires=[],
     python_requires='~=3.6',
     extras_require={
-        'dev': []
+        'dev': ['ipython', 'mypy']
     },
     classifiers=[
         'Development Status :: 3 - Alpha',
