@@ -30,8 +30,8 @@ async def _stream_command(command: List[str],
 
 def stream_command(
     command: List[str],
-    stdout_callback: Callable,
-    stderr_callback: Callable
+    stdout_callback: Callable = None,
+    stderr_callback: Callable = None
 ) -> int:
     loop = asyncio.get_event_loop()
     return_code = loop.run_until_complete(
