@@ -30,8 +30,8 @@ async def _stream_command(command: List[str],
 
 def stream_command(
     command: List[str],
-    stdout_callback,
-    stderr_callback
+    stdout_callback: Callable,
+    stderr_callback: Callable
 ) -> int:
     loop = asyncio.get_event_loop()
     return_code = loop.run_until_complete(
@@ -39,11 +39,3 @@ def stream_command(
     )
     loop.close()
     return return_code
-
-
-if __name__ == '__main__':
-    stream_command(
-        ["bash", "-c", "echo stdout && sleep 1 && echo stderr 1>&2 && sleep 1 && echo done"],
-        lambda x: print("STDOUT: %s" % x),
-        lambda x: print("STDERR: %s" % x),
-    )
