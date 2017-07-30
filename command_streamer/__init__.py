@@ -11,18 +11,28 @@ async def read_stream(stream, callback):
             break
 
 
+def print_message(s):
+    return print(s)
+
+
 async def _stream_command(command: List[str],
-                          stdout_callback: Callable,
-                          stderr_callback: Callable):
+                          on_stdout: Callable,
+                          on_stderr: Callable):
     process = await asyncio.create_subprocess_exec(
         *command,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
 
+    if not on_stdout:
+        on_stdout = print_message
+
+    if not on_stderr:
+        on_stderr = on_stdout
+
     await asyncio.wait([
-        read_stream(process.stdout, stdout_callback),
-        read_stream(process.stderr, stderr_callback),
+        read_stream(process.stdout, on_stdout),
+        read_stream(process.stderr, on_stderr),
     ])
 
     return await process.wait()
@@ -30,12 +40,12 @@ async def _stream_command(command: List[str],
 
 def stream_command(
     command: List[str],
-    stdout_callback: Callable = None,
-    stderr_callback: Callable = None
+    on_stdout=None,
+    on_stderr=None
 ) -> int:
     loop = asyncio.get_event_loop()
     return_code = loop.run_until_complete(
-        _stream_command(command, stdout_callback, stderr_callback)
+        _stream_command(command, on_stdout, on_stderr)
     )
     loop.close()
     return return_code
