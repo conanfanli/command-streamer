@@ -13,8 +13,9 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='command_streamer',
-    version='0.0.2',
+    version='0.0.3',
     description='Stream command output using asyncio',
+    long_description=long_description,
     url='https://github.com/conanfanli/command-streamer',
     packages=find_packages(exclude=['tests*']),
     install_requires=[],
